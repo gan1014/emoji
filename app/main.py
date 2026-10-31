@@ -1,4 +1,6 @@
-
+from pathlib import Path
+from fastapi.responses import FileResponse
+from app.export_service import export_tasks_to_excel
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, Literal
@@ -434,3 +436,14 @@ def create_ai_task(ai_data: AIMessage):
     finally:
         if connection is not None:
             connection.close()
+
+@app.get("/tasks/export/excel")
+def export_tasks_excel():
+
+    file_path = export_tasks_to_excel()
+
+    return FileResponse(
+        path=file_path,
+        filename=Path(file_path).name,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )

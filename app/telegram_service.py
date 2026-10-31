@@ -1,5 +1,17 @@
+
 import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 from telegram import Bot
+from telegram.request import HTTPXRequest
+
+
+# Locate the project root
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load credentials from the project's .env file
+load_dotenv(dotenv_path=BASE_DIR / ".env")
 
 
 async def send_telegram_message(message):
@@ -10,7 +22,17 @@ async def send_telegram_message(message):
     if not bot_token or not chat_id:
         raise ValueError("Telegram credentials are missing!")
 
-    bot = Bot(token=bot_token)
+    request = HTTPXRequest(
+        connect_timeout=30,
+        read_timeout=60,
+        write_timeout=30,
+        pool_timeout=30
+    )
+
+    bot = Bot(
+        token=bot_token,
+        request=request
+    )
 
     async with bot:
         await bot.send_message(
