@@ -222,4 +222,4 @@ The current test suite contains 11 tests covering:
 
 AI TaskOps demonstrates how AI models, REST APIs, databases, notification services, and workflow scheduling can work together to automate everyday task management.
 
-**Built as a hands-on portfolio project in AI automation and backend integration.**
+**Built as a hands-on portfolio project in AI automation and backend integration.**![alt text](mermaid-diagram.png)
